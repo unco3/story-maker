@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストーリージェネレーター - AI物語作成ツール</title>
+    <meta name="description" content="AIを使って魅力的な物語を作成するツール。キャラクター設定から物語構成まで、段階的にストーリーを構築します。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: 'hsl(var(--border))',
+                        input: 'hsl(var(--input))',
+                        ring: 'hsl(var(--ring))',
+                        background: 'hsl(var(--background))',
+                        foreground: 'hsl(var(--foreground))',
+                        primary: {
+                            DEFAULT: 'hsl(var(--primary))',
+                            foreground: 'hsl(var(--primary-foreground))'
+                        },
+                        secondary: {
+                            DEFAULT: 'hsl(var(--secondary))',
+                            foreground: 'hsl(var(--secondary-foreground))'
+                        },
+                        destructive: {
+                            DEFAULT: 'hsl(var(--destructive))',
+                            foreground: 'hsl(var(--destructive-foreground))'
+                        },
+                        muted: {
+                            DEFAULT: 'hsl(var(--muted))',
+                            foreground: 'hsl(var(--muted-foreground))'
+                        },
+                        accent: {
+                            DEFAULT: 'hsl(var(--accent))',
+                            foreground: 'hsl(var(--accent-foreground))'
+                        },
+                        popover: {
+                            DEFAULT: 'hsl(var(--popover))',
+                            foreground: 'hsl(var(--popover-foreground))'
+                        },
+                        card: {
+                            DEFAULT: 'hsl(var(--card))',
+                            foreground: 'hsl(var(--card-foreground))'
+                        }
+                    },
+                    borderRadius: {
+                        lg: 'var(--radius)',
+                        md: 'calc(var(--radius) - 2px)',
+                        sm: 'calc(var(--radius) - 4px)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-background text-foreground">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md">メインコンテンツへスキップ</a>
+
+    <div class="container mx-auto p-6 max-w-7xl">
+        <!-- Header -->
+        <header class="mb-8 animate-in">
+            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">ストーリージェネレーター</h1>
+            <p class="text-muted-foreground">AIを活用して魅力的な物語を段階的に構築します</p>
+        </header>
+
+        <!-- Progress bar -->
+        <div class="mb-8">
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb navigation -->
+        <nav aria-label="作成プロセス" class="mb-8">
+            <div class="tabs-list inline-flex">
+                <button class="tabs-trigger" id="step-people" role="tab" data-state="active" aria-current="step">
+                    <span class="mr-2">1</span>人数選択
+                </button>
+                <button class="tabs-trigger" id="step-profiles" role="tab" data-state="inactive">
+                    <span class="mr-2">2</span>プロフィール
+                </button>
+                <button class="tabs-trigger" id="step-scenario" role="tab" data-state="inactive">
+                    <span class="mr-2">3</span>舞台設定
+                </button>
+                <button class="tabs-trigger" id="step-structure" role="tab" data-state="inactive">
+                    <span class="mr-2">4</span>シナリオ構成
+                </button>
+                <button class="tabs-trigger" id="step-outline" role="tab" data-state="inactive">
+                    <span class="mr-2">5</span>アウトライン
+                </button>
+            </div>
+        </nav>
+
+        <!-- Alert container -->
+        <div id="alert-container" aria-live="polite" aria-atomic="true" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+        <main id="main-content" class="space-y-8">
+            <!-- Step 1: プロフィール生成 -->
+            <section class="panel-profiles animate-in" aria-labelledby="profiles-heading">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="profiles-heading" class="card-title flex items-center gap-2">
+                            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            ステップ1: キャラクタープロフィール生成
+                        </h2>
+                        <p class="card-description">物語に登場するキャラクターの人数を選択し、プロフィールを生成してください。</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+                            <div class="w-full sm:w-auto">
+                                <label for="person-count" class="block text-sm font-medium mb-2">人数を選択</label>
+                                <select id="person-count" class="select w-full sm:w-48" aria-describedby="person-count-help">
+                                    <option value="1">1人</option>
+                                    <option value="2">2人</option>
+                                    <option value="3">3人</option>
+                                    <option value="4">4人</option>
+                                    <option value="5">5人</option>
+                                    <option value="6">6人</option>
+                                    <option value="7">7人</option>
+                                    <option value="8">8人</option>
+                                    <option value="9">9人</option>
+                                    <option value="10">10人</option>
+                                </select>
+                                <small id="person-count-help" class="text-muted-foreground text-xs mt-1">1〜10人のキャラクターを選択できます</small>
+                            </div>
+                            <button id="generate-btn" class="btn btn-primary" type="button">
+                                <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                <span class="button-text">プロフィール生成</span>
+                            </button>
+                        </div>
+                        <div class="grid gap-4" id="container-area" role="region" aria-label="キャラクタープロフィール"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: 舞台設定生成 -->
+            <section class="panel-scenarios panel-disabled animate-in" aria-labelledby="scenarios-heading">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="scenarios-heading" class="card-title flex items-center gap-2">
+                            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            ステップ2: 舞台設定生成
+                        </h2>
+                        <p class="card-description">キャラクターに基づいた3つの舞台設定を生成し、1つを選択してください。</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex gap-2">
+                            <button id="scenario-btn" class="btn btn-primary" type="button" disabled>
+                                <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                <span class="button-text">舞台設定生成</span>
+                            </button>
+                            <button id="regenerate-scenario-btn" class="btn btn-secondary" type="button" style="display: none;">
+                                <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <span class="button-text">舞台設定を再生成</span>
+                            </button>
+                        </div>
+                        <div id="scenarios-container" class="grid gap-4" role="region" aria-label="舞台設定の選択肢"></div>
+                        <input type="hidden" id="selected-scenario-index" value="">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: シナリオ構成生成 -->
+            <section class="panel-structure panel-disabled animate-in" aria-labelledby="structure-heading">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="structure-heading" class="card-title flex items-center gap-2">
+                            <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                            ステップ3: シナリオ構成生成
+                        </h2>
+                        <p class="card-description">選択した舞台設定に基づいて、Save the Cat方式の15ビート構成を生成します。</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex gap-2">
+                            <button id="generate-structure" class="btn btn-primary" type="button" disabled>
+                                <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                <span class="button-text">シナリオ構成生成</span>
+                            </button>
+                            <button id="regenerate-structure-btn" class="btn btn-secondary" type="button" style="display: none;">
+                                <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <span class="button-text">シナリオ構成を再生成</span>
+                            </button>
+                        </div>
+                        <div id="structure-container" class="space-y-4" role="region" aria-label="シナリオ構成"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: アウトライン生成 -->
+            <section class="panel-outline panel-disabled animate-in" aria-labelledby="outline-heading">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="outline-heading" class="card-title flex items-center gap-2">
+                            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            ステップ4: アウトライン生成
+                        </h2>
+                        <p class="card-description">物語の詳細な章立てとあらすじを生成します。</p>
+                    </div>
+                    <div class="space-y-4">
+                        <button id="generate-outline" class="btn btn-primary" type="button" disabled>
+                            <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="button-text">アウトライン生成</span>
+                        </button>
+                        <div id="outline-container" class="space-y-4" role="region" aria-label="物語のアウトライン"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50" style="display: none;" aria-hidden="true">
+        <div class="text-center">
+            <div class="loading-spinner mx-auto mb-4 w-12 h-12 border-4"></div>
+            <p class="text-muted-foreground">処理中...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
