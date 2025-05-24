@@ -21,7 +21,7 @@
 
 1. リポジトリをクローン:
 ```bash
-git clone <repository-url>
+git clone git@github.com:unco3/story-maker.git
 cd story_maker
 ```
 
