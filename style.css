@@ -563,3 +563,245 @@ body {
         padding: 1rem;
     }
 }
+
+/* Mobile First Responsive Design */
+
+/* Mobile: 0-639px (default styles) */
+/* Tablet: 640px-1023px */
+/* Desktop: 1024px+ */
+
+/* Container adjustments */
+@media (max-width: 639px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    /* Header adjustments */
+    header h1 {
+        font-size: 1.875rem;
+    }
+    
+    /* Progress tabs - horizontal scroll */
+    .tabs-list {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+        flex-wrap: nowrap;
+    }
+    
+    .tabs-trigger {
+        white-space: nowrap;
+        min-width: fit-content;
+        font-size: 0.75rem;
+        padding: 0.375rem 0.625rem;
+    }
+    
+    .tabs-trigger span {
+        display: none; /* Hide step numbers on mobile */
+    }
+    
+    /* Card and button adjustments */
+    .card {
+        padding: 1rem;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+    }
+    
+    .card-title svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    
+    /* Form controls */
+    .btn:not(.btn-sm):not(.btn-ghost) {
+        font-size: 0.875rem;
+        padding: 0.625rem 1rem;
+    }
+    
+    .btn svg {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    /* Stacked layout for form groups */
+    .flex-row-mobile {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    /* Alert positioning */
+    #alert-container {
+        left: 1rem;
+        right: 1rem;
+        top: 1rem;
+    }
+    
+    /* Profile cards grid */
+    #container-area {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Scenario cards */
+    #scenarios-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Select and input width */
+    .select, .input {
+        min-width: 100px;
+    }
+    
+    /* Hidden on mobile */
+    .hide-mobile {
+        display: none;
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    /* Two column grid for cards */
+    #container-area {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    #scenarios-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Tabs adjustments */
+    .tabs-trigger {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.875rem;
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+    /* Grid layouts */
+    #container-area {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+    
+    #scenarios-container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+/* Specific component responsive adjustments */
+@media (max-width: 639px) {
+    /* Profile field layout */
+    .profile-field-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .profile-field-label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Button groups */
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .button-group .btn {
+        width: 100%;
+    }
+    
+    /* Loading overlay text */
+    #loading-overlay p {
+        font-size: 0.875rem;
+    }
+    
+    /* Scenario radio cards */
+    .scenario-card {
+        padding: 1rem;
+    }
+    
+    /* Structure beats */
+    .beat-card {
+        padding: 1rem;
+    }
+    
+    .beat-number {
+        font-size: 0.875rem;
+    }
+    
+    /* Outline sections */
+    .outline-chapter {
+        padding: 1rem;
+    }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .btn, .select, .input {
+        min-height: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .btn:hover {
+        transform: none;
+    }
+    
+    /* Larger clickable areas */
+    .tabs-trigger {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Additional responsive improvements */
+@media (max-width: 639px) {
+    /* Responsive grid for character cards */
+    #container-area .card {
+        min-width: 0;
+    }
+    
+    /* Responsive tooltip positioning */
+    .tooltip-content {
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 250px;
+        white-space: normal;
+    }
+    
+    /* Compact card headers on mobile */
+    .card-header {
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Button icon spacing */
+    .btn svg {
+        margin-right: 0.25rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    /* Hide interactive elements */
+    .btn, .select, .input, #alert-container, #loading-overlay {
+        display: none !important;
+    }
+    
+    /* Optimize for printing */
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+    }
+}
