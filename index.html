@@ -63,11 +63,11 @@
 <body class="min-h-screen bg-background text-foreground">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md">メインコンテンツへスキップ</a>
 
-    <div class="container mx-auto p-6 max-w-7xl">
+    <div class="container mx-auto p-4 sm:p-6 max-w-7xl">
         <!-- Header -->
         <header class="mb-8 animate-in">
-            <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">ストーリージェネレーター</h1>
-            <p class="text-muted-foreground">AIを活用して魅力的な物語を段階的に構築します</p>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">ストーリージェネレーター</h1>
+            <p class="text-sm sm:text-base text-muted-foreground">AIを活用して魅力的な物語を段階的に構築します</p>
         </header>
 
         <!-- Progress bar -->
@@ -78,28 +78,28 @@
         </div>
 
         <!-- Breadcrumb navigation -->
-        <nav aria-label="作成プロセス" class="mb-8">
-            <div class="tabs-list inline-flex">
+        <nav aria-label="作成プロセス" class="mb-8 overflow-x-auto">
+            <div class="tabs-list inline-flex min-w-full sm:min-w-0">
                 <button class="tabs-trigger" id="step-people" role="tab" data-state="active" aria-current="step">
-                    <span class="mr-2">1</span>人数選択
+                    <span class="mr-1 sm:mr-2">1</span><span class="hidden sm:inline">人数選択</span><span class="sm:hidden">人数</span>
                 </button>
                 <button class="tabs-trigger" id="step-profiles" role="tab" data-state="inactive">
-                    <span class="mr-2">2</span>プロフィール
+                    <span class="mr-1 sm:mr-2">2</span>プロフィール
                 </button>
                 <button class="tabs-trigger" id="step-scenario" role="tab" data-state="inactive">
-                    <span class="mr-2">3</span>舞台設定
+                    <span class="mr-1 sm:mr-2">3</span><span class="hidden sm:inline">舞台設定</span><span class="sm:hidden">舞台</span>
                 </button>
                 <button class="tabs-trigger" id="step-structure" role="tab" data-state="inactive">
-                    <span class="mr-2">4</span>シナリオ構成
+                    <span class="mr-1 sm:mr-2">4</span><span class="hidden sm:inline">シナリオ構成</span><span class="sm:hidden">構成</span>
                 </button>
                 <button class="tabs-trigger" id="step-outline" role="tab" data-state="inactive">
-                    <span class="mr-2">5</span>アウトライン
+                    <span class="mr-1 sm:mr-2">5</span>アウトライン
                 </button>
             </div>
         </nav>
 
         <!-- Alert container -->
-        <div id="alert-container" aria-live="polite" aria-atomic="true" class="fixed top-4 right-4 z-50 space-y-2"></div>
+        <div id="alert-container" aria-live="polite" aria-atomic="true" class="fixed top-4 right-4 left-4 sm:left-auto z-50 space-y-2 max-w-sm ml-auto"></div>
 
         <main id="main-content" class="space-y-8">
             <!-- Step 1: プロフィール生成 -->
@@ -115,7 +115,7 @@
                         <p class="card-description">物語に登場するキャラクターの人数を選択し、プロフィールを生成してください。</p>
                     </div>
                     <div class="space-y-4">
-                        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+                        <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-end">
                             <div class="w-full sm:w-auto">
                                 <label for="person-count" class="block text-sm font-medium mb-2">人数を選択</label>
                                 <select id="person-count" class="select w-full sm:w-48" aria-describedby="person-count-help">
@@ -132,7 +132,7 @@
                                 </select>
                                 <small id="person-count-help" class="text-muted-foreground text-xs mt-1">1〜10人のキャラクターを選択できます</small>
                             </div>
-                            <button id="generate-btn" class="btn btn-primary" type="button">
+                            <button id="generate-btn" class="btn btn-primary w-full sm:w-auto" type="button">
                                 <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
@@ -157,14 +157,14 @@
                         <p class="card-description">キャラクターに基づいた3つの舞台設定を生成し、1つを選択してください。</p>
                     </div>
                     <div class="space-y-4">
-                        <div class="flex gap-2">
-                            <button id="scenario-btn" class="btn btn-primary" type="button" disabled>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <button id="scenario-btn" class="btn btn-primary w-full sm:w-auto" type="button" disabled>
                                 <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                                 <span class="button-text">舞台設定生成</span>
                             </button>
-                            <button id="regenerate-scenario-btn" class="btn btn-secondary" type="button" style="display: none;">
+                            <button id="regenerate-scenario-btn" class="btn btn-secondary w-full sm:w-auto" type="button" style="display: none;">
                                 <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
@@ -190,14 +190,14 @@
                         <p class="card-description">選択した舞台設定に基づいて、Save the Cat方式の15ビート構成を生成します。</p>
                     </div>
                     <div class="space-y-4">
-                        <div class="flex gap-2">
-                            <button id="generate-structure" class="btn btn-primary" type="button" disabled>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <button id="generate-structure" class="btn btn-primary w-full sm:w-auto" type="button" disabled>
                                 <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                                 <span class="button-text">シナリオ構成生成</span>
                             </button>
-                            <button id="regenerate-structure-btn" class="btn btn-secondary" type="button" style="display: none;">
+                            <button id="regenerate-structure-btn" class="btn btn-secondary w-full sm:w-auto" type="button" style="display: none;">
                                 <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                 </svg>
@@ -222,7 +222,7 @@
                         <p class="card-description">物語の詳細な章立てとあらすじを生成します。</p>
                     </div>
                     <div class="space-y-4">
-                        <button id="generate-outline" class="btn btn-primary" type="button" disabled>
+                        <button id="generate-outline" class="btn btn-primary w-full sm:w-auto" type="button" disabled>
                             <svg class="w-4 h-4 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
